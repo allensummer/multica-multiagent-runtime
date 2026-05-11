@@ -32,6 +32,64 @@ Multica workspace 多 Agent 协作长时间运行方案。
               └───────────────────────┘
 ```
 
+## Project Structure
+
+```
+multica-multiagent-runtime/
+├── src/
+│   ├── master/
+│   │   └── checkpoint_manager.py    # Master checkpoint management
+│   ├── executor/
+│   │   ├── __init__.py
+│   │   ├── executor.py              # Executor base class
+│   │   ├── pool.py                 # Executor pool management
+│   │   └── protocol.py             # @mention protocol implementation
+│   ├── checkpoint_manager/
+│   │   ├── __init__.py
+│   │   ├── file_store.py           # File-based checkpoint storage
+│   │   ├── manager.py              # Checkpoint manager
+│   │   ├── models.py               # Data models
+│   │   └── store.py                # Store interface
+│   └── shared-state/
+│       ├── __init__.py
+│       ├── base.py                  # Base shared state interface
+│       ├── file_store.py           # File-based state storage
+│       └── models.py                # State models
+├── e2e-test-user-profile/           # E2E integration tests
+│   ├── src/
+│   │   ├── user_profile.py         # User profile feature
+│   │   ├── checkpoint.py           # Checkpoint utilities
+│   │   └── demo_checkpoint.py      # Checkpoint demo
+│   └── tests/
+│       └── test_user_profile.py    # Unit tests
+├── tests/                           # Additional tests
+├── docs/                            # Documentation
+├── requirements.txt
+└── README.md
+```
+
+## Implementation Status
+
+### Phase 1: Core Infrastructure ✅
+- [x] Executor Agent Pool (`src/executor/`)
+- [x] Shared State Store (`src/shared-state/`)
+- [x] @mention Communication Protocol (`src/executor/protocol.py`)
+
+### Phase 2: Persistence ✅
+- [x] Checkpoint Manager (`src/checkpoint_manager/`, `src/master/checkpoint_manager.py`)
+- [x] Event Log mechanism
+- [x] State recovery flow
+
+### Phase 3: Error Handling ✅
+- [x] Error Classification
+- [x] Root Cause Analysis integration
+- [x] Recovery Strategies
+
+### Phase 4: Advanced Features 🔄
+- [ ] Adaptive Executor scaling
+- [ ] Intelligent task decomposition
+- [ ] Performance monitoring
+
 ## Executor Agent Pool
 
 | Agent | 职责 | 场景 |
@@ -57,28 +115,6 @@ Multica workspace 多 Agent 协作长时间运行方案。
 1. **Root Cause Analysis First** - 根因分析优先
 2. **Error Classification** - Retryable / Recoverable / Fatal
 3. **Recovery Strategies** - Retry with backoff / Rollback to checkpoint / Escalate
-
-## Implementation Phases
-
-### Phase 1: Core Infrastructure
-- [ ] Executor Agent Pool 建立
-- [ ] Shared State Store 实现
-- [ ] 基础通信协议
-
-### Phase 2: Persistence
-- [ ] Checkpoint 机制
-- [ ] Event Log 机制
-- [ ] 状态恢复流程
-
-### Phase 3: Error Handling
-- [ ] Error Classification
-- [ ] Root Cause Analysis 集成
-- [ ] Recovery Strategies
-
-### Phase 4: Advanced Features
-- [ ] 自适应 Executor 扩缩容
-- [ ] 智能任务分解
-- [ ] 性能监控与优化
 
 ## License
 
